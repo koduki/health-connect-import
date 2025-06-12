@@ -26,9 +26,23 @@ Android Health Connectからヘルスデータをインポートするための�
 
 ## セットアップ
 
-1. Android Studio Hedgehog 以降を使用してプロジェクトを開く
-2. プロジェクトをビルドする
-3. Android 14 (API 34) 以降が搭載されたデバイスまたはエミュレーターで実行する
+ビルダーをビルドする
+
+```bash
+docker build -t android-builder:latest .
+```
+
+デバッグビルド (APK) の場合:
+
+```bash
+docker run --rm -v "$(pwd):/app" -w /app android-builder:latest ./gradlew assembleDebug
+```
+
+リリースビルド (AAB) の場合:
+
+```bash
+docker run --rm -v "$(pwd):/app" -w /app android-builder:latest ./gradlew bundleRelease
+```
 
 ## Health Connect について
 
