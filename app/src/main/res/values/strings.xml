@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Health Connect Import</string>
+    <string name="health_data_title">Health Connect Data Import</string>
+    <string name="grant_permissions">Grant Health Permissions</string>
+    <string name="load_health_data">Load Health Data</string>
+    <string name="loading">Loading...</string>
+    <string name="permissions_required">Health permissions are required to access your health data</string>
+    <string name="no_data">No health data available</string>
+    <string name="error_loading_data">Error loading health data</string>
+</resources> 
