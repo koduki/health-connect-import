@@ -35,13 +35,13 @@ docker build -t android-builder:latest .
 デバッグビルド (APK) の場合:
 
 ```bash
-docker run --rm -v "$(pwd):/app" -w /app android-builder:latest ./gradlew assembleDebug
+docker run --rm -v "${PWD}:/app" -w /app android-builder:latest gradle assembleDebug
 ```
 
 リリースビルド (AAB) の場合:
 
 ```bash
-docker run --rm -v "$(pwd):/app" -w /app android-builder:latest ./gradlew bundleRelease
+docker run --rm -v "${PWD}:/app" -w /app android-builder:latest gradle bundleRelease
 ```
 
 ## Health Connect について

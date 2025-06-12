@@ -8,6 +8,7 @@ ARG JDK_VERSION=17
 ARG ANDROID_CMD_TOOLS_VERSION=11076708
 ARG ANDROID_BUILD_TOOLS_VERSION="34.0.0"
 ARG ANDROID_PLATFORM_VERSION="34"
+ARG GRADLE_VERSION=8.4
 
 # タイムゾーン設定や対話形式のプロンプトを抑制
 ENV TZ=Asia/Tokyo
@@ -41,10 +42,16 @@ RUN yes | sdkmanager --licenses && \
                "platforms;android-${ANDROID_PLATFORM_VERSION}" \
                "build-tools;${ANDROID_BUILD_TOOLS_VERSION}"
 
-# 4. デフォルトのワーキングディレクトリを設定
+# 4. Gradleをインストール
+ENV GRADLE_HOME=/opt/gradle
+RUN wget -q https://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip -O /tmp/gradle.zip && \
+    unzip -d /opt /tmp/gradle.zip && \
+    mv /opt/gradle-${GRADLE_VERSION} ${GRADLE_HOME} && \
+    rm /tmp/gradle.zip
+ENV PATH=$PATH:${GRADLE_HOME}/bin
+
+# 5. デフォルトのワーキングディレクトリを設定
 WORKDIR /app
 
-# (オプション) Gradleのラッパーを実行可能にする
-# このDockerfile自体はソースコードを含まないので、
-# コンテナ実行時にマウントされたgradlewに実行権限を付与するステップ
-# CMD ["sh", "-c", "chmod +x ./gradlew && ./gradlew"]
+# このDockerfileでビルドしたコンテナは、`gradle`コマンドを直接実行できます
+# 例: docker run --rm -v $(pwd):/app android-builder:latest gradle assembleDebug
