@@ -3,6 +3,7 @@ package com.example.healthconnectimport.data
 import androidx.health.connect.client.HealthConnectClient
 import androidx.health.connect.client.records.*
 import androidx.health.connect.client.units.Energy
+import androidx.health.connect.client.units.Power
 import androidx.health.connect.client.units.Length
 import androidx.health.connect.client.units.Mass
 import androidx.health.connect.client.units.Percentage
@@ -62,7 +63,7 @@ class HealthDataImporter(private val healthConnectClient: HealthConnectClient) {
                     // Basal Metabolic Rate Record
                     records.add(
                         BasalMetabolicRateRecord(
-                            basalMetabolicRate = Energy.kilocalories(data.metabolism.toDouble()),
+                            basalMetabolicRate = Power.kilocaloriesPerDay(data.metabolism.toDouble()),
                             time = instant,
                             zoneOffset = data.time.offset
                         )
@@ -114,4 +115,4 @@ data class ImportResult(
     val failedRecords: Int,
     val errors: List<String>,
     val isSuccess: Boolean
-) 
+)  

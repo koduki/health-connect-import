@@ -14,7 +14,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FileUpload
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
     
     // Activity Result Launcher for Health Connect permissions
     private val permissionLauncher = registerForActivityResult(
-        HealthConnectClient.permissionController.createRequestPermissionsResultContract()
+        ActivityResultContracts.RequestMultiplePermissions()
     ) { granted ->
         // Handle permission result
     }
@@ -117,7 +117,7 @@ class MainActivity : ComponentActivity() {
     }
     
     private fun requestHealthPermissions() {
-        permissionLauncher.launch(allPermissions)
+        permissionLauncher.launch(allPermissions.map { it.toString() }.toTypedArray())
     }
     
     private fun handleSelectedFile(uri: Uri) {
@@ -228,7 +228,7 @@ fun CsvImportScreen(
             enabled = !isImporting
         ) {
             Icon(
-                imageVector = Icons.Default.FileUpload,
+                imageVector = Icons.Default.Add,
                 contentDescription = null,
                 modifier = Modifier.size(18.dp)
             )
@@ -359,4 +359,4 @@ fun CsvImportScreenPreview() {
             onClearResult = { }
         )
     }
-} 
+}      
